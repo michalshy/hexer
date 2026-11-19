@@ -1,0 +1,27 @@
+[
+  {
+    "label": "hexer: configure",
+    "command": "cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "reveal": "always"
+  },
+  {
+    "label": "hexer: build",
+    "command": "cmake --build build -j",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "reveal": "always"
+  },
+  {
+    "label": "hexer: test",
+    "command": "cmake --build build -j && ctest --test-dir build --output-on-failure",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "reveal": "always"
+  },
+  {
+    "label": "hexer: run",
+    "command": "cmake --build build -j && ./build/src/hexer",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": true,
+    "reveal": "always"
+  }
+]
