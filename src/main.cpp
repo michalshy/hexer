@@ -1,1 +1,3 @@
-int main() { return 0; }
+#include "app.h"
+
+int main() { app{}.run(); }
