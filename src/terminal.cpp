@@ -34,6 +34,7 @@ result terminal::init() {
 }
 
 result terminal::deinit() {
+  refresh_screen();
   if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &impl->org_termios)) {
     return std::unexpected(AppError::TERMINAL);
   }
@@ -50,6 +51,18 @@ result terminal::read_one() {
   return {};
 }
 
-void terminal::refresh_screen() { write(STDOUT_FILENO, "\x1b[2J", 4); }
+void terminal::refresh_screen() {
+  write(STDOUT_FILENO, "\x1b[2J", 4);
+  write(STDOUT_FILENO, "\x1b[H", 3);
+
+  prepare_screen();
+  write(STDOUT_FILENO, "\x1b[H", 3);
+}
 
 char terminal::get_symbol() { return impl->c; }
+
+void terminal::prepare_screen() {
+  for (size_t y = 0; y < 24; y++) {
+    write(STDOUT_FILENO, "~\r\n", 3);
+  }
+}

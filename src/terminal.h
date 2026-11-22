@@ -18,6 +18,9 @@ public:
   result read_one();
   void refresh_screen();
   char get_symbol();
+
+private:
+  void prepare_screen();
 };
 
 #endif

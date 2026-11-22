@@ -11,13 +11,8 @@ app::app() : term(std::make_unique<terminal>()) {}
 app::~app() {}
 
 void app::run() {
-  if (result res = init(); !res.has_value()) {
-    std::print("application failed to initialize: {}",
-               static_cast<int>(res.error()));
-    return;
-  }
-
-  while (true) {
+  init();
+  while (running) {
     term->refresh_screen();
 
     if (result res = read_key(); !res.has_value()) {
@@ -29,11 +24,7 @@ void app::run() {
       break;
     }
   }
-
-  if (result res = deinit(); !res.has_value()) {
-    std::print("application failed to deinitialize: {}",
-               static_cast<int>(res.error()));
-  }
+  deinit();
 }
 
 result app::read_key() { return term->read_one(); }
@@ -46,6 +37,16 @@ bool app::process() {
   return true;
 }
 
-result app::init() { return term->init(); }
+void app::init() {
+  if (result res = term->init(); !res) {
+    std::print("application failed to initialize: {}",
+               static_cast<int>(res.error()));
+  }
+}
 
-result app::deinit() { return term->deinit(); }
+void app::deinit() {
+  if (result res = term->deinit(); !res) {
+    std::print("application failed to deinitialize: {}",
+               static_cast<int>(res.error()));
+  };
+}

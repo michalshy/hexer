@@ -1,12 +1,12 @@
 #ifndef app_h
 #define app_h
 
-#include "common.h"
 #include "terminal.h"
 #include <memory>
 
 class app {
   std::unique_ptr<terminal> term;
+  bool running{true};
 
 public:
   app();
@@ -18,8 +18,8 @@ private:
   result read_key();
   bool process();
 
-  result init();
-  result deinit();
+  void init();
+  void deinit();
 };
 
 #endif
