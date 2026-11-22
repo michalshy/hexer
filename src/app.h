@@ -1,6 +1,7 @@
 #ifndef app_h
 #define app_h
 
+#include "common.h"
 #include "terminal.h"
 #include <memory>
 
@@ -12,6 +13,13 @@ public:
   ~app();
 
   void run();
+
+private:
+  result read_key();
+  bool process();
+
+  result init();
+  result deinit();
 };
 
 #endif

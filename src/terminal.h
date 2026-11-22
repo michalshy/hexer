@@ -1,6 +1,7 @@
 #ifndef terminal_h
 #define terminal_h
 
+#include "common.h"
 #include <memory>
 
 class terminal {
@@ -8,11 +9,15 @@ class terminal {
   std::unique_ptr<pimpl> impl;
 
 public:
-  int read_one();
-  char get_symbol();
-
   terminal();
   ~terminal();
+
+  result init();
+  result deinit();
+
+  result read_one();
+  void refresh_screen();
+  char get_symbol();
 };
 
 #endif
