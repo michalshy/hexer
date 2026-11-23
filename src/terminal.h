@@ -20,6 +20,10 @@ public:
   char get_symbol();
 
 private:
+  result enable_raw();
+  result update_screen_size();
+  result get_cursor_position();
+
   void prepare_screen();
 };
 
