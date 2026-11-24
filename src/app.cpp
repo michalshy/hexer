@@ -1,4 +1,5 @@
 #include "app.h"
+#include "common.h"
 #include "terminal.h"
 #include <cctype>
 #include <memory>
@@ -30,9 +31,17 @@ void app::run() {
 result app::read_key() { return term->read_one(); }
 
 bool app::process() {
-  char symbol = term->get_symbol();
+  int symbol = term->get_symbol();
   if (symbol == ctrl_press('q')) {
     return false;
+  }
+  if (symbol == keys::page_down || symbol == keys::page_up)
+    term->move_row(symbol);
+  if (symbol == keys::home_key || symbol == keys::end_key)
+    term->move_col(symbol);
+  if (symbol == keys::arrow_down || symbol == keys::arrow_left ||
+      symbol == keys::arrow_right || symbol == keys::arrow_up) {
+    term->move_cursor(symbol);
   }
   return true;
 }

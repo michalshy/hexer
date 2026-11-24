@@ -17,11 +17,16 @@ public:
 
   result read_one();
   void refresh_screen();
-  char get_symbol();
+  int get_symbol();
+
+  void move_cursor(int c);
+  void move_row(int type);
+  void move_col(int type);
 
 private:
   result enable_raw();
   result update_screen_size();
+  void init_buffer();
   result get_cursor_position();
 
   void prepare_screen();
